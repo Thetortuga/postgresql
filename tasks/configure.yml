@@ -72,8 +72,8 @@
 
 - name: PostgreSQL | Reset the cluster - drop the existing one | Debian
   shell: pg_dropcluster {{ postgresql_version }} {{ postgresql_cluster_name }}
-  become: yes
-  become_user: "{{ postgresql_service_user }}"
+  #become: yes
+  #become_user: "{{ postgresql_service_user }}"
   when: ansible_os_family == "Debian" and postgresql_cluster_reset and pgdata_dir_exist.changed
 
 - name: PostgreSQL | Reset the cluster - create a new one (with specified encoding and locale) | Debian
@@ -86,8 +86,8 @@
     {% if postgresql_pwfile != "" %}--pwfile={{ postgresql_pwfile }} {% endif %}
     {% if postgresql_wal_directory != "" and postgresql_version is version_compare('10', '<') %}--xlogdir={{ postgresql_wal_directory }} {% endif %}
     {% if postgresql_wal_directory != "" and postgresql_version is version_compare('10', '>=') %}--waldir={{ postgresql_wal_directory }} {% endif %}
-  become: yes
-  become_user: "{{ postgresql_service_user }}"
+  #become: yes
+  #become_user: "{{ postgresql_service_user }}"
   when: ansible_os_family == "Debian" and postgresql_cluster_reset and pgdata_dir_exist.changed
 
 - name: PostgreSQL | Update systemd | Debian
@@ -116,8 +116,8 @@
     {% if postgresql_pwfile != "" %}--pwfile={{ postgresql_pwfile }} {% endif %}
     {% if postgresql_wal_directory != "" and postgresql_version is version_compare('10', '<') %}--xlogdir={{ postgresql_wal_directory }} {% endif %}
     {% if postgresql_wal_directory != "" and postgresql_version is version_compare('10', '>=') %}--waldir={{ postgresql_wal_directory }} {% endif %}
-  become: yes
-  become_user: "{{ postgresql_service_user }}"
+  #become: yes
+  #become_user: "{{ postgresql_service_user }}"
   when: ansible_os_family == "RedHat" and
         (postgresql_cluster_reset or
          pgdata_dir_exist.changed or
@@ -156,8 +156,8 @@
   register: postgresql_configuration_pt2
 
 - name: PostgreSQL | Update configuration - pt. 3 (pgtune)
-  become: true
-  become_user: "{{ postgresql_service_user }}"
+  #become: true
+  #become_user: "{{ postgresql_service_user }}"
   shell: |
     set -e
     TMPDIR=$(mktemp -d)
