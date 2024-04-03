@@ -1,0 +1,15 @@
+- name: Checkout PGSqueeze
+  ansible.builtin.git:
+    repo: 'https://github.com/cybertec-postgresql/pg_squeeze.git'
+    dest: /tmp/pgsqueeze
+    version: debian/1.6.2-1
+
+- name: Make PGSqueeze
+  community.general.make:
+    chdir: /tmp/pgsqueeze
+
+- name: Install PGSqueeze
+  community.general.make:
+    chdir: /tmp/pgsqueeze
+    target: install
+  become: true

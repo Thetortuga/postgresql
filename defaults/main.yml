@@ -57,6 +57,10 @@ postgresql_ext_postgis_deps:
   - "postgresql-{{ postgresql_version }}-postgis-{{ postgresql_ext_postgis_version }}"
   - "postgresql-{{ postgresql_version }}-postgis-scripts"
 
+# PGSqueeze
+
+postgresql_ext_install_pgsqueeze: no
+
 # Foreign Data Wrapper(s)
 postgresql_fdw_mysql: no
 postgresql_fdw_ogr: no
