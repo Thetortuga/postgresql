@@ -2,7 +2,9 @@
 
 - name: PostgreSQL | Extensions | Make sure the development headers are installed | Debian
   apt:
-    name: libpq-dev
+    name: 
+      - libpq-dev
+      - postgresql-server-dev-{{ postgresql_version_terse }}
     state: present
     update_cache: yes
     cache_valid_time: "{{ apt_cache_valid_time | default (3600) }}"
