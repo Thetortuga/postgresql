@@ -144,6 +144,7 @@
     mode: 0640
   no_log: "{{ postgresql_hide_passwords }}"
   register: postgresql_configuration_pt1
+  when: not postgresql_managed_by_patroni
 
 - name: PostgreSQL | Update configuration - pt. 2 (postgresql.conf)
   template:
@@ -154,6 +155,7 @@
     group: "{{ postgresql_service_group }}"
     mode: 0640
   register: postgresql_configuration_pt2
+  when: not postgresql_managed_by_patroni
 
 - name: PostgreSQL | Update configuration - pt. 3 (pgtune)
   #become: true
@@ -181,7 +183,7 @@
   args:
     chdir: "{{postgresql_conf_directory}}"
     executable: "/bin/bash"
-  when: postgresql_pgtune
+  when: postgresql_pgtune and not postgresql_managed_by_patroni
   register: postgresql_configuration_pt3
   changed_when: "'_OK_' not in postgresql_configuration_pt3.stdout"
 
@@ -194,6 +196,7 @@
     mode: 0640
   register: postgresql_configuration_pt4
   notify: restart postgresql
+  when: not postgresql_managed_by_patroni
 
 - name: PostgreSQL | Create folder for additional configuration files
   file:

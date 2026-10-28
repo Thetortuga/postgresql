@@ -5,3 +5,4 @@
       name: "{{ postgresql_service_name }}"
       state: restarted
       enabled: yes
+    when: not postgresql_managed_by_patroni

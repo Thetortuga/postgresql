@@ -839,3 +839,7 @@ postgresql_apt_py2_dependencies: ["python-psycopg2", "python-pycurl", "locales"]
 postgresql_apt_dependencies: "{{ postgresql_apt_py3_dependencies if ansible_python.version.major == 3 else postgresql_apt_py2_dependencies }}"
 
 postgresql_hide_passwords: false
+
+# When true, pg_hba.conf / postgresql.conf / pg_ident.conf are left to Patroni
+# and the role never reloads or restarts PostgreSQL
+postgresql_managed_by_patroni: false
